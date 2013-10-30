@@ -12,7 +12,9 @@ if (Meteor.isClient) {
 
   Template.main.events({
     'click [type="button"]' : function () {
-      if (Meteor.user().profile.foo === 'bar') {
+      if (! Meteor.user().profile) {
+        Meteor.users.update(Meteor.userId(), { $set: {'profile.foo': 'bar'} })
+      } else if (Meteor.user().profile.foo === 'bar') {
         Meteor.users.update(Meteor.userId(), { $set: {'profile.foo': 'baz'} })
       } else {
         Meteor.users.update(Meteor.userId(), { $set: {'profile.foo': 'bar'} })
