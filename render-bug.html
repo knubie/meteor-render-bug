@@ -1,0 +1,24 @@
+<head>
+  <title>render-bug</title>
+</head>
+
+<body>
+  {{> loginButtons}}
+  {{#if currentUser}}
+    {{> main}}
+  {{/if}}
+</body>
+
+<template name="main">
+  <ul>
+    {{#each messages}}
+      <li>
+        {{text}}
+      </li>
+    {{/each}}
+  </ul>
+  <form id="new-message">
+    <input type="text" placeholder="Enter new message" />
+  </form>
+  <input type="button" value="Change user profile." />
+</template>
