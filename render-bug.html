@@ -3,22 +3,26 @@
 </head>
 
 <body>
-  {{> loginButtons}}
-  {{#if currentUser}}
-    {{> main}}
-  {{/if}}
+  {{> main}}
 </body>
 
+<template name="_page">
+  {{> content}}
+</template>
+
 <template name="main">
-  <ul>
-    {{#each messages}}
-      <li>
-        {{text}}
-      </li>
-    {{/each}}
-  </ul>
-  <form id="new-message">
-    <input type="text" placeholder="Enter new message" />
-  </form>
-  <input type="button" value="Change user profile." />
+  {{#page "main"}}
+    <input type="button" value="switch collection"/>
+    <ul>
+      {{#each messages}}
+        {{> message}}
+      {{/each}}
+    </ul>
+  {{/page}}
+</template>
+
+<template name="message">
+  <li class="{{selected}}">
+    {{text}}
+  </li>
 </template>
