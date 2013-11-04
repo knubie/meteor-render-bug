@@ -18,16 +18,18 @@ if (Meteor.isClient) {
   Session.setDefault('set', 'a');
   Session.setDefault('page', 'main');
 
-  // This gets called too many times.
+  // This gets called too many times, and increases every time Session.get('foo') changes.
   Template.main.data = function () {
     console.log('getting foo.');
     return Session.get('foo');
   }
 
+  // The collection to iterate over.
   Template.main.messages = function () {
     return Messages.find({set: Session.get('set')})
   };
 
+  // Changes the collection in Template.main.messages
   Template.main.events({
     'click input' : function (e, t) {
       console.log('-----switch set-----');
@@ -39,6 +41,7 @@ if (Meteor.isClient) {
     }
   });
 
+  // Highlight the currently selected item.
   Template.message.helpers({
     selected: function () {
       if (Session.get('foo') === this.text) {
@@ -49,10 +52,12 @@ if (Meteor.isClient) {
     }
   });
 
+  // Every time Session.get('foo') changes the amount of times this rendered increases.
   Template.message.rendered = function () {
     console.log('message rendered.');
   }
 
+  // This changes Session.get('foo')
   Template.message.events({
     'click li' : function (e, t) {
       console.log('+++++switch session+++++');
@@ -60,6 +65,8 @@ if (Meteor.isClient) {
     }
   });
 
+
+  // This loads the appropriate template.
   Handlebars.registerHelper('page', function (page) {
     if (Session.equals('page', page)) {
      return Template._page;
